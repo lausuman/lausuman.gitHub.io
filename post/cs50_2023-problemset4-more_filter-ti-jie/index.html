@@ -1,0 +1,338 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>CS50_(2023) ProblemSet4 - more_filter 题解 | Lausuman</title>
+
+<link rel="shortcut icon" href="https://lausuman.github.io/favicon.ico?v=1711251413696">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://lausuman.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    <link rel="stylesheet" type="text/css" href="https://lausuman.github.io/highlight/styles/atom-one-light.css">
+    <script src="https://lausuman.github.io/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Lausuman
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1711251413696" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    CS50_(2023) ProblemSet4 - more_filter 题解
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2024-02-22 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="题目说明">题目说明</h1>
+<p>题目出自 Harvard CS50x 课程第四周作业习题</p>
+<p>目的是编写一个程序进行BMP图像处理</p>
+<h1 id="grayscale-灰度">grayscale 灰度</h1>
+<p>我们把一个像素的红色、绿色、蓝色的值都设置为<code>0x00</code>则该像素为纯黑，把一个像素的红色、绿色、蓝色的值都设置为<code>0xff</code>则该像素为纯白，因此只要使红、绿、蓝三者数值相等，该像素的颜色就介于纯黑和纯白之间。</p>
+<p>因此，我们只用使红、绿、蓝数值相等就可以得到灰度图像了，但是红、绿、蓝的具体数值怎么确定呢？为了确保新图像的每个像素仍然与旧图像的每个像素拥有相同的亮度或暗度，我们可以通过取原始红、绿、蓝数值的平均数来确定。</p>
+<pre><code>void grayscale(int height, int width, RGBTRIPLE image[height][width])
+{
+    float avg;
+    // 遍历图形中的每个像素
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width; j++)
+        {
+            // 取红绿蓝的平均值
+            avg = (image[i][j].rgbtBlue + image[i][j].rgbtRed + image[i][j].rgbtGreen) / 3.0;
+            // 四舍五入后赋值给源像素
+            image[i][j].rgbtBlue = (int) round(avg);
+            image[i][j].rgbtRed = (int) round(avg);
+            image[i][j].rgbtGreen = (int) round(avg);
+        }
+    }
+    return;
+}
+</code></pre>
+<h1 id="reflect-翻转">reflect 翻转</h1>
+<p>为了实现反转图像我们仅需将左边的像素放到右边<br>
+<img src="https://lausuman.github.io/post-images/1708575619712.png" alt="" loading="lazy"></p>
+<p>观察图片可以猜想，像素左右对调后的坐标就等于宽 - 自己的横坐标 - 1</p>
+<pre><code>void reflect(int height, int width, RGBTRIPLE image[height][width])
+{
+    BYTE buffer;
+
+    // 遍历图形中的每个像素
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width / 2; j++)
+        {
+            buffer = image[i][j].rgbtBlue;
+            image[i][j].rgbtBlue = image[i][width - j - 1].rgbtBlue;
+            image[i][width - j - 1].rgbtBlue = buffer;
+
+            buffer = image[i][j].rgbtRed;
+            image[i][j].rgbtRed = image[i][width - j - 1].rgbtRed;
+            image[i][width - j - 1].rgbtRed = buffer;
+
+            buffer = image[i][j].rgbtGreen;
+            image[i][j].rgbtGreen = image[i][width - j - 1].rgbtGreen;
+            image[i][width - j - 1].rgbtGreen = buffer;
+        }
+    }
+    return;
+}
+</code></pre>
+<h1 id="blur-模糊">blur 模糊</h1>
+<p>每个像素的新值是以像素为中心，画一个3x3 框，求框内像素值的平均值。以6为例，6的颜色值是1、2、3、5、6、7、9、10 、11 原始颜色值的平均值<br>
+<img src="https://lausuman.github.io/post-images/1708580519951.png" alt="" loading="lazy"></p>
+<p>对于边缘像素来说，则是以该像素为中心，画一个3x3 框，求在该框内且同时在图片中的像素值的平均值。以1为例，1的颜色值是2、5、6原始颜色值的平均值<img src="https://lausuman.github.io/post-images/1708580695350.png" alt="" loading="lazy"></p>
+<p>因此我们可以推断出以任意一个像素画框，画框的范围不能超过图片宽度和高度。同时要注意不能使求平均值后的像素立刻赋值到原始图片中，不然这样下一个像素的周围像素值就会被改变。</p>
+<pre><code>void blur(int height, int width, RGBTRIPLE image[height][width])
+{
+    RGBTRIPLE tempImage[height][width];
+
+    // 遍历图形中的每个像素
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width; j++)
+        {
+            float tempRGB[3] = {0.0,0.0,0.0};
+            float times = 0.0;
+
+            //遍历该像素周围的像素
+            for (int k = -1; k &lt; 2; k++)
+            {
+                for (int l = -1; l &lt; 2; l++)
+                {
+                    //进行框是否在图片内的判断
+                    if (i + k &gt;= 0 &amp;&amp; j + l &gt;= 0 &amp;&amp; i + k &lt; height &amp;&amp; j + l &lt; width)
+                    {
+                        tempRGB[0] += image[i + k][j + l].rgbtRed;
+                        tempRGB[1] += image[i + k][j + l].rgbtGreen;
+                        tempRGB[2] += image[i + k][j + l].rgbtBlue;
+                        times += 1.0;
+                    }
+                }
+            }
+
+            //对该像素周围像素的值求平均值
+            for (int m = 0; m &lt; 3; m++)
+            {
+                tempRGB[m] /= times;
+            }
+
+            //将模糊化后的像素值存入temp图片中
+            tempImage[i][j].rgbtRed = (int) round(tempRGB[0]);
+            tempImage[i][j].rgbtGreen = (int) round(tempRGB[1]);
+            tempImage[i][j].rgbtBlue = (int) round(tempRGB[2]);
+        }
+    }
+
+    //将temp图片值复制给原图片
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width; j++)
+        {
+            image[i][j].rgbtRed = tempImage[i][j].rgbtRed;
+            image[i][j].rgbtGreen = tempImage[i][j].rgbtGreen;
+            image[i][j].rgbtBlue = tempImage[i][j].rgbtBlue;
+        }
+
+    }
+
+    return;
+}
+</code></pre>
+<h1 id="edges-识别边缘">Edges 识别边缘</h1>
+<p>这个函数实现和前面那个很像，值得提醒的是这里对待超出图片范围的像素是视为0的。</p>
+<pre><code>void edges(int height, int width, RGBTRIPLE image[height][width])
+{
+    RGBTRIPLE tempImage[height][width];
+    //生成存放Gx和Gy的二位数组
+    int Gx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
+    int Gy[3][3] = {{-1, -2, -1}, {0, 0, 0}, {1, 2, 1}};
+
+    // 遍历图形中的每个像素
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width; j++)
+        {
+            //临时存放该像素周围与Gx和Gy相乘后的颜色值
+            float tempRGB_Gx[3] = {0.0,0.0,0.0};
+            float tempRGB_Gy[3] = {0.0,0.0,0.0};
+
+            //遍历该像素周围3x3的像素
+            for (int k = -1; k &lt; 2; k++)
+            {
+                for (int l = -1; l &lt; 2; l++)
+                {
+                    //进行框是否在图片内的判断
+                    if (i + k &gt;= 0 &amp;&amp; j + l &gt;= 0 &amp;&amp; i + k &lt; height &amp;&amp; j + l &lt; width)
+                    {
+                        tempRGB_Gx[0] += (image[i + k][j + l].rgbtRed) * Gx[k+1][l+1];
+                        tempRGB_Gy[0] += (image[i + k][j + l].rgbtRed) * Gy[k+1][l+1];
+
+                        tempRGB_Gx[1] += (image[i + k][j + l].rgbtGreen) * Gx[k+1][l+1];
+                        tempRGB_Gy[1] += (image[i + k][j + l].rgbtGreen) * Gy[k+1][l+1];
+
+                        tempRGB_Gx[2] += (image[i + k][j + l].rgbtBlue) * Gx[k+1][l+1];
+                        tempRGB_Gy[2] += (image[i + k][j + l].rgbtBlue) * Gy[k+1][l+1];
+
+                    }
+                }
+            }
+
+            int red = (int)round(sqrt(pow(tempRGB_Gx[0], 2) + pow(tempRGB_Gy[0], 2)));
+            int green = (int)round(sqrt(pow(tempRGB_Gx[1], 2) + pow(tempRGB_Gy[1], 2)));
+            int blue = (int)round(sqrt(pow(tempRGB_Gx[2], 2) + pow(tempRGB_Gy[2], 2)));
+            //将值限定在0~255之间
+            red = (red &gt; 255) ? 255 : ((red &lt; 0) ? 0 : red);
+            green = (green &gt; 255) ? 255 : ((green &lt; 0) ? 0 : green);
+            blue = (blue &gt; 255) ? 255 : ((blue &lt; 0) ? 0 : blue);
+
+            //将运算后的像素值存入temp图片中
+            tempImage[i][j].rgbtRed = red;
+            tempImage[i][j].rgbtGreen = green;
+            tempImage[i][j].rgbtBlue = blue;
+
+        }
+    }
+
+    //将temp图片值复制给原图片
+    for (int i = 0; i &lt; height; i++)
+    {
+        for (int j = 0; j &lt; width; j++)
+        {
+            image[i][j].rgbtRed = tempImage[i][j].rgbtRed;
+            image[i][j].rgbtGreen = tempImage[i][j].rgbtGreen;
+            image[i][j].rgbtBlue = tempImage[i][j].rgbtBlue;
+        }
+
+    }
+
+    return;
+}
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://lausuman.github.io/post/esp8266-rc522/" class="post-title gt-a-link">
+                    esp8266 rc522
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/lausuman" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://lausuman.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

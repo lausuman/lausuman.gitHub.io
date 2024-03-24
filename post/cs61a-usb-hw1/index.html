@@ -1,0 +1,296 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>CS61A USB Hw1 | Lausuman</title>
+
+<link rel="shortcut icon" href="https://lausuman.github.io/favicon.ico?v=1711251413696">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://lausuman.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    <link rel="stylesheet" type="text/css" href="https://lausuman.github.io/highlight/styles/atom-one-light.css">
+    <script src="https://lausuman.github.io/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Lausuman
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1711251413696" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    CS61A USB Hw1
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-04-18 ·
+                    </time>
+                    
+                        <a href="https://lausuman.github.io/tag/zsd7zKM5J/" class="post-tags">
+                            # CS61A
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>Q2: A Plus Abs B</p>
+<pre><code>def a_plus_abs_b(a, b):
+	&quot;&quot;&quot;Return a+abs(b), but without calling abs.
+
+	&gt;&gt;&gt; a_plus_abs_b(2, 3)
+	5
+	&gt;&gt;&gt; a_plus_abs_b(2, -3)
+	5
+	&gt;&gt;&gt; # a check that you didn't change the return statement!
+	&gt;&gt;&gt; import inspect, re
+	&gt;&gt;&gt; re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
+	['return f(a, b)']
+	&quot;&quot;&quot;
+	if b &lt; 0:
+		f = sub
+	else:
+		f = add
+	return f(a, b)
+</code></pre>
+<p>Q3: Two of Three</p>
+<pre><code>def two_of_three(x, y, z):
+	&quot;&quot;&quot;Return a*a + b*b, where a and b are the two smallest members of the
+	positive numbers x, y, and z.
+
+	&gt;&gt;&gt; two_of_three(1, 2, 3)
+	5
+	&gt;&gt;&gt; two_of_three(5, 3, 1)
+	10
+	&gt;&gt;&gt; two_of_three(10, 2, 8)
+	68
+	&gt;&gt;&gt; two_of_three(5, 5, 5)
+	50
+	&gt;&gt;&gt; # check that your code consists of nothing but an expression (this docstring)
+	&gt;&gt;&gt; # a return statement
+	&gt;&gt;&gt; import inspect, ast
+	&gt;&gt;&gt; [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
+	['Expr', 'Return']
+	&quot;&quot;&quot;
+	return  min(x,y,z)*min(x,y,z) + max(min(x,y),min(x,z),min(z,y))*max(min(x,y),min(x,z),min(z,y))
+</code></pre>
+<p>Q4: Largest Factor</p>
+<pre><code>def largest_factor(n):
+	&quot;&quot;&quot;Return the largest factor of n that is smaller than n.
+
+	&gt;&gt;&gt; largest_factor(15) # factors are 1, 3, 5
+	5
+	&gt;&gt;&gt; largest_factor(80) # factors are 1, 2, 4, 5, 8, 10, 16, 20, 40
+	40
+	&gt;&gt;&gt; largest_factor(13) # factor is 1 since 13 is prime
+	1
+	&quot;&quot;&quot;
+	&quot;*** YOUR CODE HERE ***&quot;
+	a = n - 1
+	while a &gt; 0:
+		if n % a == 0:
+			return a
+		a -= 1
+</code></pre>
+<p>Q5: If Function vs Statement</p>
+<pre><code>def if_function(condition, true_result, false_result):
+	&quot;&quot;&quot;Return true_result if condition is a true value, and
+	false_result otherwise.
+
+	&gt;&gt;&gt; if_function(True, 2, 3)
+	2
+	&gt;&gt;&gt; if_function(False, 2, 3)
+	3
+	&gt;&gt;&gt; if_function(3==2, 'equal', 'not equal')
+	'not equal'
+	&gt;&gt;&gt; if_function(3&gt;2, 'bigger', 'smaller')
+	'bigger'
+	&quot;&quot;&quot;
+	if condition:
+		return true_result
+	else:
+		return false_result
+
+def with_if_statement():
+	&quot;&quot;&quot;
+	&gt;&gt;&gt; result = with_if_statement()
+	61A
+	&gt;&gt;&gt; print(result)
+	None
+	&quot;&quot;&quot;
+	if cond():
+		return true_func()
+	else:
+		return false_func()
+def with_if_function():
+	&quot;&quot;&quot;
+	&gt;&gt;&gt; result = with_if_function()
+	Welcome to
+	61A
+	&gt;&gt;&gt; print(result)
+	None
+	&quot;&quot;&quot;
+	return if_function(cond(), true_func(), false_func())
+
+def cond():
+	&quot;*** YOUR CODE HERE ***&quot;
+	return False
+def true_func(): 
+	&quot;*** YOUR CODE HERE ***&quot;
+	print(&quot;Welcome to&quot;)
+def false_func():
+	&quot;*** YOUR CODE HERE ***&quot;
+	print(&quot;61A&quot;)
+</code></pre>
+<p>Q6: Hailstone</p>
+<pre><code>
+def hailstone(n):
+	&quot;&quot;&quot;Print the hailstone sequence starting at n and return its
+	length.
+
+	&gt;&gt;&gt; a = hailstone(10)
+	10
+	5
+	16
+	8
+	4
+	2
+	1
+	&gt;&gt;&gt; a
+	7
+	&quot;&quot;&quot;
+	&quot;*** YOUR CODE HERE ***&quot;
+	x = 1
+	while n != 1:
+		if n % 2 == 0 :
+			print(n)
+			n = n // 2
+		else:
+			print(n)
+			n = n * 3 + 1
+		x += 1
+		pass
+	print(n)
+	return x 
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://lausuman.github.io/post/automatically-get-electronic-invoice/" class="post-title gt-a-link">
+                    Automatically get electronic invoice
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/lausuman" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://lausuman.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

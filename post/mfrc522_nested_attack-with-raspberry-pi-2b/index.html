@@ -1,0 +1,260 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>MFRC522_nested_attack with Raspberry Pi 2B | Lausuman</title>
+
+<link rel="shortcut icon" href="https://lausuman.github.io/favicon.ico?v=1711251413696">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://lausuman.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    <link rel="stylesheet" type="text/css" href="https://lausuman.github.io/highlight/styles/atom-one-light.css">
+    <script src="https://lausuman.github.io/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Lausuman
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1711251413696" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    MFRC522_nested_attack with Raspberry Pi 2B
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-02-09 ·
+                    </time>
+                    
+                        <a href="https://lausuman.github.io/tag/zKkVbYPU-/" class="post-tags">
+                            # IC卡
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p><strong>背景</strong><br>
+淘宝上PN532的读卡器比较贵，也只能破解半加密，RC522比较便宜</p>
+<p><strong>准备材料</strong></p>
+<ol>
+<li>Raspberry Pi 2B（我是用这个，其他Raspberry Pi 应该也行但我没有测试）</li>
+<li>杜邦线若干</li>
+<li>RC522</li>
+</ol>
+<p><strong>步骤</strong><br>
+0. 远程连接树莓派输入<code>git clone https://github.com/omersiar/MFRC522_nested_attack.git</code></p>
+<ol>
+<li>输入<code>sudo apt-get install wiringpi</code>安装wiringpi，安装完成后输入<code>gpio readall</code> 查看树莓派针脚对应的<img src="https://lausuman.github.io/post-images/1644392215637.png" alt="" loading="lazy"></li>
+<li></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">raspberry</th>
+<th style="text-align:center">(wirepi) pin</th>
+<th style="text-align:center">MFRC522</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Reset</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">RST</td>
+</tr>
+<tr>
+<td style="text-align:center">SPI CE0</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">SSN\SDA (slave select)</td>
+</tr>
+<tr>
+<td style="text-align:center">SPI MOSI</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">MOSI</td>
+</tr>
+<tr>
+<td style="text-align:center">SPI MISO</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">MISO</td>
+</tr>
+<tr>
+<td style="text-align:center">SPI SCK</td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">SCK</td>
+</tr>
+<tr>
+<td style="text-align:center">3.3V</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">Vcc</td>
+</tr>
+<tr>
+<td style="text-align:center">GND</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">GND</td>
+</tr>
+<tr>
+<td style="text-align:center">将步骤1和上表pin脚一一对应连接<img src="https://lausuman.github.io/post-images/1644395463328.JPG" alt="" loading="lazy"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><img src="https://lausuman.github.io/post-images/1644400444205.jpg" alt="" loading="lazy"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><img src="https://lausuman.github.io/post-images/1644395470266.JPG" alt="" loading="lazy"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li>输入<code>cd MFRC522_nested_attack/src</code>和<code>nano main.cpp</code>更改你需要攻击的块和已知块</li>
+<li>输入<code>cd MFRC522_nested_attack/src</code>和<code>make</code></li>
+<li>输入<code>./crack</code> <strong>(注意先放卡片后执行命令,否则会一直Timeout)</strong></li>
+<li>成功，结果类似</li>
+</ol>
+<pre><code>pi@raspberrypi:~/MFRC522_nested_attack $ ./crack
+Recovering keys.. this may take some time
+&lt;35.19&gt;Round 1: Found 1448025 possible keys, with most repeated key: 4
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+KEY FOUND TO BE:                11ffffffffff
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Time to crack: 35.19
+Timeout
+pi@raspberrypi:~/MFRC522_nested_attack $ ./crack
+Recovering keys.. this may take some time
+&lt;46.7911&gt;Round 1: Found 1460708 possible keys, with most repeated key: 4
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+KEY FOUND TO BE:                11ff22ff43f4
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Time to crack: 46.7911
+Timeout
+pi@raspberrypi:~/MFRC522_nested_attack $ make clean
+rm crack build/main.o build/RC522.o build/MFrec.o build/crapto1.o build/crypto1.o
+pi@raspberrypi:~/MFRC522_nested_attack $
+</code></pre>
+<p><strong>Reference:</strong><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="gray"><mrow><mo>[</mo><mn>1</mn><mo>]</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\color{gray}{[1]}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord" style="color:gray;"><span class="mopen" style="color:gray;">[</span><span class="mord" style="color:gray;">1</span><span class="mclose" style="color:gray;">]</span></span></span></span></span> HakonHystad. (2017, Apr 7). MFRC522_nested_attack. GitHub. https://github.com/HakonHystad/MFRC522_nested_attack</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://lausuman.github.io/post/nubia_z9_mini-nx511j/" class="post-title gt-a-link">
+                    Rom_Nubia_Z9_Mini-NX511J(UNOFFICIAlROM)
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">温故而知新</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/lausuman" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://lausuman.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
